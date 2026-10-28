@@ -224,6 +224,7 @@
 
     const createSampleResume = () => ({
         personal: {
+            photo: "", showPhoto: false, targetRole: "Frontend Developer", jobDescription: "", experienceLevel: "student", hasExperience: true, resumePurpose: "job",
             name: "Alex Morgan",
             role: "Frontend Developer",
             email: "alex.morgan@email.com",
