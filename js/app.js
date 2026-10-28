@@ -4,7 +4,7 @@
     const { createEmptyResume, createSampleResume, getResume, getValue, saveResume, setValue, renderPreview } = window.ResumeForge;
     const state = {
         resume: getResume(),
-        activeTab: "personal"
+        activeTab: "questions"
     };
 
     const elements = {
