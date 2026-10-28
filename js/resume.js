@@ -206,7 +206,7 @@
                 </div>${photo}
             </header>
             ${renderSection("Professional Summary", personal.summary ? `<p>${escapeHtml(personal.summary)}</p>` : "")}
-            ${renderSection("Experience", personal.hasExperience === false ? "" : renderExperience(resume.experience))}
+            ${renderSection("Work Experience", personal.hasExperience === false ? "" : renderExperience(resume.experience))}
             ${renderSection("Education", renderEducation(resume.education))}
             ${renderSection("Skills", resume.skills.trim()
                 ? `<p class="resume-skills">${resume.skills.split(/[,;\n]/).map((skill) => escapeHtml(skill.trim())).filter(Boolean).join(" &nbsp; · &nbsp; ")}</p>`
