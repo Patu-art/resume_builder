@@ -249,7 +249,8 @@
 
     const exportPdf = () => window.print();
 
-    elements.editor.addEventListener("change", async (event) => {\n        if (event.target.dataset.boolPath) { const raw = event.target.value; setValue(state.resume, event.target.dataset.boolPath, raw === "yes" ? true : raw === "no" ? false : null); persist(); return; }
+    elements.editor.addEventListener("change", async (event) => {
+        if (event.target.dataset.boolPath) { const raw = event.target.value; setValue(state.resume, event.target.dataset.boolPath, raw === "yes" ? true : raw === "no" ? false : null); persist(); return; }
         if (event.target.id === "photoUpload" && event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
             if (!file.type.startsWith("image/")) { showToast("Choose an image file."); return; }
