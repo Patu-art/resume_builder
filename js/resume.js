@@ -253,6 +253,10 @@
             }
         ],
         skills: "HTML, CSS, JavaScript, Git, Responsive Design, Debugging, Teamwork",
+        certifications: [],
+        achievements: [],
+        languages: "",
+        additional: "",
         theme: "modern"
     });
 
