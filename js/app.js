@@ -88,7 +88,7 @@
     const renderExperienceTab = () => `
         <div class="section-heading">
             <h2>Experience</h2>
-            <span class="section-count">02 / 05</span>
+            <span class="section-count">03 / 07</span>
         </div>
         <p class="field-hint">Include employment, internships, volunteering, freelance work or leadership. Describe what you actually did.</p>
         ${renderEntries("experience", state.resume.experience, "Role", [
@@ -109,7 +109,7 @@
     const renderEducationTab = () => `
         <div class="section-heading">
             <h2>Education</h2>
-            <span class="section-count">03 / 05</span>
+            <span class="section-count">04 / 07</span>
         </div>
         ${renderEntries("education", state.resume.education, "Education", [
             { label: "Degree / qualification", key: "degree", placeholder: "B.Tech Computer Science" },
@@ -128,7 +128,7 @@
     const renderSkillsTab = () => `
         <div class="section-heading">
             <h2>Skills and projects</h2>
-            <span class="section-count">04 / 05</span>
+            <span class="section-count">05 / 07</span>
         </div>
         ${field("Skills (comma separated)", "skills", "HTML, CSS, JavaScript, teamwork...", true, true)}
         <p class="field-hint">Only list skills you can confidently discuss in an interview.</p>
@@ -168,7 +168,7 @@
         return `
             <div class="section-heading">
                 <h2>Resume style</h2>
-                <span class="section-count">05 / 05</span>
+                <span class="section-count">07 / 07</span>
             </div>
             <p class="field-hint">Choose a restrained accent. The resume keeps a single-column structure for easier ATS parsing.</p>
             <div class="style-options">
