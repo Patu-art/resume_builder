@@ -90,7 +90,7 @@
             <h2>Experience</h2>
             <span class="section-count">03 / 07</span>
         </div>
-        <p class="field-hint">Include employment, internships, volunteering, freelance work or leadership. Describe what you actually did.</p>
+        <p class="field-hint">${state.resume.personal.hasExperience === false ? "You marked yourself as a fresher. You can skip this section; your resume will focus on education, projects, skills and activities instead." : "Include employment, internships, volunteering, freelance work or leadership. Describe what you actually did. If you have none, leave this section empty and continue."}</p>
         ${renderEntries("experience", state.resume.experience, "Role", [
             { label: "Job title", key: "role", placeholder: "e.g. Web Development Intern" },
             { label: "Company / organization", key: "company", placeholder: "Organization name" },
@@ -249,7 +249,7 @@
 
     const exportPdf = () => {
         const b = state.resume.personal;
-        const hasSection = Boolean(state.resume.skills.trim() || state.resume.experience.some(item => item.role || item.company || item.details) || state.resume.education.some(item => item.degree || item.school) || state.resume.projects.some(item => item.name || item.details));
+        const hasSection = Boolean(String(state.resume.skills || "").trim() || state.resume.experience.some(item => item.role || item.company || item.details) || state.resume.education.some(item => item.degree || item.school || item.details) || state.resume.projects.some(item => item.name || item.details) || state.resume.certifications.some(item => item.name || item.details) || state.resume.achievements.some(item => item.name || item.details) || String(state.resume.languages || "").trim() || String(state.resume.additional || "").trim());
         if (!b.name.trim() || !hasSection) {
             state.activeTab = !b.name.trim() ? "personal" : "skills";
             renderEditor();
