@@ -1696,3 +1696,123 @@ body {
     .workspace { grid-template-columns: minmax(0, 1fr) !important; }
     .section-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
+
+
+/* Final user-first responsive pass: prevent cramped header actions and sidebar on narrow screens. */
+@media screen and (max-width: 1240px) {
+    .editor-layout {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .section-tabs {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    .nav-note {
+        grid-column: 1 / -1;
+        margin-top: 8px;
+    }
+    .preview-column {
+        position: static !important;
+        top: auto !important;
+    }
+}
+@media screen and (max-width: 760px) {
+    .topbar {
+        display: flex !important;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px 12px;
+        padding: 12px 14px !important;
+    }
+    .brand { flex: 0 0 auto; }
+    .topbar-center {
+        flex: 1 1 130px;
+        justify-content: flex-end;
+        font-size: 10px;
+        text-align: right;
+    }
+    .top-actions {
+        display: grid !important;
+        width: 100%;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        justify-content: stretch;
+        gap: 8px;
+    }
+    .save-status {
+        grid-column: 1 / -1;
+        justify-self: start;
+        padding: 0 !important;
+        background: transparent !important;
+    }
+    .top-actions .button {
+        width: 100%;
+        min-width: 0;
+        padding-inline: 10px;
+        font-size: 11px;
+    }
+    .workspace {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 24px !important;
+        padding: 22px 14px 28px !important;
+    }
+    .editor-column, .preview-column, .editor-layout, .editor-card {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+    .section-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 7px !important;
+    }
+    .tab-button {
+        grid-template-columns: 22px minmax(0, 1fr) 10px;
+        min-height: 48px;
+        padding: 9px 8px !important;
+        overflow-wrap: anywhere;
+    }
+    .tab-label { font-size: 11px; }
+    .nav-label, .nav-note { grid-column: 1 / -1; }
+    .editor-card { padding: 18px 14px !important; }
+    .form-grid, .ai-settings-grid, .style-options {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .field-full { grid-column: 1 / -1; }
+    .preview-heading {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .preview-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+    }
+    .preview-actions .button { width: 100%; }
+    .preview-stage { padding: 9px !important; }
+    .resume-document {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        overflow-wrap: anywhere;
+        padding: 22px 15px !important;
+        box-sizing: border-box;
+    }
+    .form-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+    .form-actions .button { width: 100%; }
+}
+@media screen and (max-width: 380px) {
+    .topbar-center { flex-basis: 100%; justify-content: flex-start; text-align: left; }
+    .top-actions { grid-template-columns: minmax(0, 1fr); }
+    .save-status { grid-column: auto; }
+    .intro h1 { font-size: clamp(32px, 9.5vw, 39px) !important; }
+    .tab-button { grid-template-columns: 20px minmax(0, 1fr); }
+    .tab-arrow { display: none; }
+    .section-heading { gap: 8px; }
+    .section-heading h2 { font-size: 21px; }
+}
