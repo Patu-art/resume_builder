@@ -192,14 +192,14 @@
             <header class="resume-header ${photo ? "has-photo" : ""}">
                 <div class="resume-header-copy">
                 <h1 class="resume-name">${escapeHtml(personal.name || "Your Name")}</h1>
-                <div class="resume-role">${escapeHtml(personal.role || "Target Job Title")}</div>
+                <div class="resume-role">${escapeHtml(personal.role || personal.targetRole || "Target Job Title")}</div>
                 <div class="resume-contact">
                     ${contactDetails.length ? contactDetails.join(" &nbsp; · &nbsp; ") : '<span class="empty-preview">Email · Phone · Location · LinkedIn / Portfolio</span>'}
                 </div>
                 </div>${photo}
             </header>
             ${renderSection("Professional Summary", personal.summary ? `<p>${escapeHtml(personal.summary)}</p>` : "")}
-            ${renderSection("Experience", renderExperience(resume.experience))}
+            ${renderSection("Experience", personal.hasExperience === false ? "" : renderExperience(resume.experience))}
             ${renderSection("Education", renderEducation(resume.education))}
             ${renderSection("Skills", resume.skills.trim()
                 ? `<p class="resume-skills">${resume.skills.split(/[,;\n]/).map((skill) => escapeHtml(skill.trim())).filter(Boolean).join(" &nbsp; · &nbsp; ")}</p>`
