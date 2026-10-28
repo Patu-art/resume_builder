@@ -1139,3 +1139,65 @@ a:focus-visible {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Guided resume-builder controls and optional profile photo */
+.choice-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    background: #fffefa;
+}
+.choice-row label, .check-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--ink);
+    font-size: 11px;
+    font-weight: 500;
+}
+.choice-row input, .check-inline input { accent-color: var(--forest); }
+.question-note {
+    margin-top: 18px;
+    padding: 13px 15px;
+    border-left: 2px solid var(--copper);
+    background: var(--surface-muted);
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+.question-note strong { color: var(--ink); }
+.photo-upload-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+.photo-upload-preview img {
+    width: 72px;
+    height: 84px;
+    object-fit: cover;
+    border: 1px solid var(--line-dark);
+}
+.resume-header.has-photo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+.resume-header-copy { min-width: 0; flex: 1; }
+.resume-photo {
+    width: 88px;
+    height: 104px;
+    flex: 0 0 auto;
+    object-fit: cover;
+    border: 1px solid #deded5;
+}
+@media (max-width: 760px) {
+    .choice-row { flex-direction: column; gap: 10px; }
+    .resume-photo { width: 70px; height: 84px; }
+}
+@media print {
+    .resume-photo { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
