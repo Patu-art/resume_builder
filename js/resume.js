@@ -5,6 +5,13 @@
 
     const createEmptyResume = () => ({
         personal: {
+            photo: "",
+            showPhoto: false,
+            targetRole: "",
+            jobDescription: "",
+            experienceLevel: "student",
+            hasExperience: null,
+            resumePurpose: "job",
             name: "",
             role: "",
             email: "",
