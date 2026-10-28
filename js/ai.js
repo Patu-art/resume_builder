@@ -179,7 +179,7 @@
         setStatus("Generating suggestion…");
 
         try {
-            const prompt = createPrompt(kind, input.text, resume.personal.role);
+            const prompt = createPrompt(kind, input.text, resume.personal.role || resume.personal.targetRole);
             const output = config.provider === "gemini"
                 ? await requestGemini(prompt, config)
                 : await requestOpenAiCompatible(prompt, config);
