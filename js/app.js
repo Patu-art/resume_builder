@@ -133,9 +133,9 @@
 
     const renderDesignTab = () => {
         const themes = [
-            { value: "modern", label: "Modern indigo" },
-            { value: "classic", label: "Classic charcoal" },
-            { value: "green", label: "Professional green" }
+            { value: "modern", label: "Forest" },
+            { value: "classic", label: "Ink" },
+            { value: "green", label: "Copper" }
         ];
 
         return `
