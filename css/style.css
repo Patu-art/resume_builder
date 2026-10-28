@@ -1514,3 +1514,160 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
     .button:hover { transform: none; }
 }
+
+
+/* Responsive repair: keep the editor from retaining its desktop sidebar on phones. */
+html {
+    max-width: 100%;
+    overflow-x: clip;
+}
+body {
+    width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+}
+.workspace,
+.editor-layout,
+.editor-card,
+.preview-column,
+.preview-stage,
+.intro,
+.ai-panel {
+    min-width: 0;
+    max-width: 100%;
+}
+@media (max-width: 1240px) {
+    .workspace {
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100%;
+    }
+    .preview-column {
+        position: static;
+        height: auto;
+        min-height: 0;
+    }
+    .preview-stage {
+        min-height: 0;
+    }
+}
+@media (max-width: 760px) {
+    .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 22px;
+        width: 100%;
+        margin: 0;
+        padding: 24px 14px;
+    }
+    .editor-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 14px;
+        width: 100%;
+    }
+    .section-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        width: 100%;
+        gap: 7px;
+        padding: 0;
+    }
+    .tab-button {
+        min-width: 0;
+        width: 100%;
+        min-height: 54px;
+        padding: 10px 12px;
+        overflow-wrap: anywhere;
+    }
+    .editor-card {
+        width: 100%;
+        min-width: 0;
+        padding: 19px 16px;
+    }
+    .form-grid,
+    .ai-settings,
+    .style-options {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .field,
+    .field input,
+    .field select,
+    .field textarea,
+    input,
+    select,
+    textarea {
+        min-width: 0;
+        max-width: 100%;
+    }
+    .field input,
+    .field select,
+    .field textarea,
+    input,
+    select,
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .preview-column {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+    }
+    .preview-stage {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        padding: 12px;
+    }
+    .resume-document {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        min-height: 0;
+        padding: 24px 18px;
+        font-size: 10px;
+        box-sizing: border-box;
+    }
+    .preview-actions,
+    .editor-footer,
+    .button-row {
+        flex-wrap: wrap;
+        gap: 9px;
+    }
+    button,
+    .button {
+        max-width: 100%;
+        white-space: normal;
+    }
+    .topbar {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        padding-inline: 14px;
+    }
+}
+@media (max-width: 420px) {
+    .workspace {
+        padding-inline: 10px;
+    }
+    .editor-card {
+        padding: 16px 12px;
+    }
+    .section-tabs {
+        gap: 5px;
+    }
+    .tab-button {
+        min-height: 50px;
+        padding: 9px 8px;
+        font-size: 13px;
+    }
+    .preview-stage {
+        padding: 7px;
+    }
+    .resume-document {
+        padding: 18px 13px;
+        font-size: 9px;
+    }
+    .intro h1 {
+        font-size: clamp(34px, 10vw, 43px);
+    }
+}
