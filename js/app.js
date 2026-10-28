@@ -56,7 +56,8 @@
             ${field("City / location", "personal.location", "Kalyan, Maharashtra")}
             ${field("LinkedIn URL", "personal.linkedin", "linkedin.com/in/yourname")}
             ${field("Portfolio / GitHub", "personal.website", "github.com/yourname")}
-            ${field("Professional summary", "personal.summary", "Your strengths, relevant experience and target role.", true, true)}\n            <div class="field field-full"><label for="photoUpload">Resume photo (optional)</label><input id="photoUpload" type="file" accept="image/jpeg,image/png,image/webp"><label class="check-inline"><input id="showPhoto" type="checkbox" ${state.resume.personal.showPhoto ? "checked" : ""}> Include photo on the resume</label><p class="field-hint">Photo is optional and often omitted for ATS-focused applications. Use a professional headshot only if appropriate for your country / industry.</p><div id="photoPreviewWrap" class="photo-upload-preview" ${state.resume.personal.photo ? "" : "hidden"}><img id="uploadedPhotoPreview" src="${state.resume.personal.photo || ""}" alt="Uploaded photo preview"><button class="button button-danger button-small" data-remove-photo type="button">Remove photo</button></div></div>
+            ${field("Professional summary", "personal.summary", "Your strengths, relevant experience and target role.", true, true)}
+            <div class="field field-full"><label for="photoUpload">Resume photo (optional)</label><input id="photoUpload" type="file" accept="image/jpeg,image/png,image/webp"><label class="check-inline"><input id="showPhoto" type="checkbox" ${state.resume.personal.showPhoto ? "checked" : ""}> Include photo on the resume</label><p class="field-hint">Photo is optional and often omitted for ATS-focused applications. Use a professional headshot only if appropriate for your country / industry.</p><div id="photoPreviewWrap" class="photo-upload-preview" ${state.resume.personal.photo ? "" : "hidden"}><img id="uploadedPhotoPreview" src="${state.resume.personal.photo || ""}" alt="Uploaded photo preview"><button class="button button-danger button-small" data-remove-photo type="button">Remove photo</button></div></div>
         </div>
         <div class="form-actions">
             <span class="field-hint">Keep your contact details current and use a specific job title.</span>
@@ -144,7 +145,20 @@
         </div>
     `;
 
-    const renderAdditionalTab = () => `\n        <div class="section-heading"><h2>Additional resume sections</h2><span class="section-count">06 / 07</span></div>\n        <p class="field-hint">Add only relevant items. Leave any section blank if you have nothing to include.</p>\n        <h3>Certifications & courses</h3>\n        ${renderEntries("certifications", state.resume.certifications || [], "Certification", [{ label: "Certificate / course name", key: "name", placeholder: "e.g. Intro to Python" }, { label: "Issuer / date", key: "date", placeholder: "Issuer · 2026" }, { label: "Details (optional)", key: "details", placeholder: "Skills covered or credential ID", multiline: true, fullWidth: true }])}\n        <button class="button add-entry" data-add="certifications" type="button">+ Add certification</button>\n        <h3>Achievements, volunteering & leadership</h3>\n        ${renderEntries("achievements", state.resume.achievements || [], "Achievement", [{ label: "Achievement / activity", key: "name", placeholder: "e.g. NSS volunteer" }, { label: "Date", key: "date", placeholder: "2025" }, { label: "What you did / recognition", key: "details", placeholder: "Brief, factual detail", multiline: true, fullWidth: true }])}\n        <button class="button add-entry" data-add="achievements" type="button">+ Add achievement</button>\n        <div class="form-grid additional-fields">${field("Languages", "languages", "English, Hindi, Marathi", true, true)}${field("Other relevant information (optional)", "additional", "Awards, publications, interests relevant to the role…", true, true)}</div>\n        <div class="form-actions"><button class="button button-quiet" data-next="skills" type="button">← Skills & projects</button><button class="button button-primary" data-next="design" type="button">Review resume →</button></div>\n    `;\n\n    const renderDesignTab = () => {
+    const renderAdditionalTab = () => `
+        <div class="section-heading"><h2>Additional resume sections</h2><span class="section-count">06 / 07</span></div>
+        <p class="field-hint">Add only relevant items. Leave any section blank if you have nothing to include.</p>
+        <h3>Certifications & courses</h3>
+        ${renderEntries("certifications", state.resume.certifications || [], "Certification", [{ label: "Certificate / course name", key: "name", placeholder: "e.g. Intro to Python" }, { label: "Issuer / date", key: "date", placeholder: "Issuer · 2026" }, { label: "Details (optional)", key: "details", placeholder: "Skills covered or credential ID", multiline: true, fullWidth: true }])}
+        <button class="button add-entry" data-add="certifications" type="button">+ Add certification</button>
+        <h3>Achievements, volunteering & leadership</h3>
+        ${renderEntries("achievements", state.resume.achievements || [], "Achievement", [{ label: "Achievement / activity", key: "name", placeholder: "e.g. NSS volunteer" }, { label: "Date", key: "date", placeholder: "2025" }, { label: "What you did / recognition", key: "details", placeholder: "Brief, factual detail", multiline: true, fullWidth: true }])}
+        <button class="button add-entry" data-add="achievements" type="button">+ Add achievement</button>
+        <div class="form-grid additional-fields">${field("Languages", "languages", "English, Hindi, Marathi", true, true)}${field("Other relevant information (optional)", "additional", "Awards, publications, interests relevant to the role…", true, true)}</div>
+        <div class="form-actions"><button class="button button-quiet" data-next="skills" type="button">← Skills & projects</button><button class="button button-primary" data-next="design" type="button">Review resume →</button></div>
+    `;
+
+    const renderDesignTab = () => {
         const themes = [
             { value: "modern", label: "Forest" },
             { value: "classic", label: "Ink" },
@@ -182,11 +196,13 @@
 
     const renderEditor = () => {
         const renderers = {
-            questions: renderQuestionsTab,\n            personal: renderPersonalTab,
-            questions: renderQuestionsTab,\n            experience: renderExperienceTab,
+            questions: renderQuestionsTab,
+            personal: renderPersonalTab,
+            experience: renderExperienceTab,
             education: renderEducationTab,
             skills: renderSkillsTab,
-            additional: renderAdditionalTab,\n            design: renderDesignTab
+            additional: renderAdditionalTab,
+            design: renderDesignTab
         };
 
         elements.editor.innerHTML = renderers[state.activeTab]();
@@ -219,6 +235,8 @@
 
     const addEntry = (type) => {
         const templates = {
+            certifications: { name: "", date: "", details: "" },
+            achievements: { name: "", date: "", details: "" },
             experience: { role: "", company: "", location: "", start: "", end: "", details: "" },
             education: { degree: "", school: "", location: "", year: "", details: "" },
             projects: { name: "", link: "", details: "" }
@@ -231,7 +249,20 @@
 
     const exportPdf = () => window.print();
 
-    elements.editor.addEventListener("change", async (event) => {\n        if (event.target.id === "photoUpload" && event.target.files && event.target.files[0]) {\n            const file = event.target.files[0];\n            if (!file.type.startsWith("image/")) { showToast("Choose an image file."); return; }\n            if (file.size > 8 * 1024 * 1024) { showToast("Choose an image under 8 MB."); event.target.value = ""; return; }\n            const image = new Image(); const reader = new FileReader();\n            reader.onload = () => { image.onload = () => { const canvas = document.createElement("canvas"); const scale = Math.min(1, 500 / Math.max(image.width, image.height)); canvas.width = Math.round(image.width * scale); canvas.height = Math.round(image.height * scale); canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height); state.resume.personal.photo = canvas.toDataURL("image/jpeg", 0.82); state.resume.personal.showPhoto = true; persist(); renderEditor(); showToast("Photo added. You can remove it anytime."); }; image.src = reader.result; }; reader.readAsDataURL(file);\n        }\n        if (event.target.id === "showPhoto") { state.resume.personal.showPhoto = event.target.checked; persist(); return; }\n        const path = event.target.dataset.path;\n        if (path) { setValue(state.resume, path, event.target.value); persist(); }\n    });\n\n    elements.editor.addEventListener("input", (event) => {
+    elements.editor.addEventListener("change", async (event) => {
+        if (event.target.id === "photoUpload" && event.target.files && event.target.files[0]) {
+            const file = event.target.files[0];
+            if (!file.type.startsWith("image/")) { showToast("Choose an image file."); return; }
+            if (file.size > 8 * 1024 * 1024) { showToast("Choose an image under 8 MB."); event.target.value = ""; return; }
+            const image = new Image(); const reader = new FileReader();
+            reader.onload = () => { image.onload = () => { const canvas = document.createElement("canvas"); const scale = Math.min(1, 500 / Math.max(image.width, image.height)); canvas.width = Math.round(image.width * scale); canvas.height = Math.round(image.height * scale); canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height); state.resume.personal.photo = canvas.toDataURL("image/jpeg", 0.82); state.resume.personal.showPhoto = true; persist(); renderEditor(); showToast("Photo added. You can remove it anytime."); }; image.src = reader.result; }; reader.readAsDataURL(file);
+        }
+        if (event.target.id === "showPhoto") { state.resume.personal.showPhoto = event.target.checked; persist(); return; }
+        const path = event.target.dataset.path;
+        if (path) { setValue(state.resume, path, event.target.value); persist(); }
+    });
+
+    elements.editor.addEventListener("input", (event) => {
         const path = event.target.dataset.path;
 
         if (!path) {
@@ -243,7 +274,8 @@
     });
 
     elements.editor.addEventListener("click", (event) => {
-        if (event.target.closest("[data-remove-photo]")) { state.resume.personal.photo = ""; state.resume.personal.showPhoto = false; persist(); renderEditor(); showToast("Photo removed."); return; }\n        const nextButton = event.target.closest("[data-next]");
+        if (event.target.closest("[data-remove-photo]")) { state.resume.personal.photo = ""; state.resume.personal.showPhoto = false; persist(); renderEditor(); showToast("Photo removed."); return; }
+        const nextButton = event.target.closest("[data-next]");
 
         if (nextButton) {
             state.activeTab = nextButton.dataset.next;
