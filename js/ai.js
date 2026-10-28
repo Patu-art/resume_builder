@@ -97,7 +97,8 @@
             skills: `Clean up and organize this candidate's existing skills for a resume targeting ${targetRole}. Do not add skills not present in the input. Return only a comma-separated list.`
         };
 
-        const jobContext = jobDescription.trim() ? `\n\nTarget job description (use only to prioritize relevant facts and keywords; do not claim requirements the candidate has not demonstrated):\n${jobDescription.trim()}` : "";\n        return `${instructions[kind]}${jobContext}\n\nCandidate text:\n${input}`;
+        const jobContext = jobDescription.trim() ? `\n\nTarget job description (use only to prioritize relevant facts and keywords; do not claim requirements the candidate has not demonstrated):\n${jobDescription.trim()}` : "";
+        return `${instructions[kind]}${jobContext}\n\nCandidate text:\n${input}`;
     };
 
     const requestGemini = async (prompt, config) => {
