@@ -347,24 +347,78 @@
     document.querySelector("#exportButton").addEventListener("click", exportPdf);
     document.querySelector("#printButton").addEventListener("click", exportPdf);
 
+    const DRAFT_KEY = "resumeforge.resume.v1";
+    const BACKUP_KEY = "resumeforge.resume.backup.v1";
+    const restoreButton = document.querySelector("#restoreButton");
+
+    const updateRestoreButton = () => {
+        try {
+            restoreButton.disabled = !localStorage.getItem(BACKUP_KEY);
+        } catch (error) {
+            restoreButton.disabled = true;
+        }
+    };
+
     document.querySelector("#resetButton").addEventListener("click", () => {
-        const confirmed = window.confirm("Reset this resume? This clears the saved draft in this browser and cannot be undone.");
+        const confirmed = window.confirm("Reset this resume? A backup will be kept so you can restore it.");
 
         if (!confirmed) return;
 
-        state.resume = createEmptyResume();
         try {
-            localStorage.removeItem("resumeforge.resume.v1");
+            // Keep a recoverable copy before clearing the current draft.
+            localStorage.setItem(BACKUP_KEY, JSON.stringify(state.resume));
+            localStorage.removeItem(DRAFT_KEY);
         } catch (error) {
-            console.warn("Could not remove the saved draft.", error);
+            showToast("Could not create a backup. Your draft was not reset.");
+            return;
         }
+
+        state.resume = createEmptyResume();
         state.activeTab = "questions";
         renderEditor();
         refresh();
         elements.saveStatus.textContent = "Draft reset";
         elements.saveStatus.style.color = "var(--success)";
-        showToast("Draft reset. Your previous resume has been cleared.");
+        updateRestoreButton();
+        showToast("Draft reset. Use Restore draft to bring it back.");
     });
+
+    restoreButton.addEventListener("click", () => {
+        let backup;
+
+        try {
+            const savedBackup = localStorage.getItem(BACKUP_KEY);
+            if (!savedBackup) {
+                updateRestoreButton();
+                showToast("No previous draft is available to restore.");
+                return;
+            }
+            backup = JSON.parse(savedBackup);
+            if (!backup || typeof backup !== "object" || !backup.personal) {
+                throw new Error("Invalid draft backup");
+            }
+            if (!saveResume(backup)) {
+                showToast("Could not restore the draft on this device.");
+                return;
+            }
+            localStorage.removeItem(BACKUP_KEY);
+        } catch (error) {
+            console.error("Could not restore the saved draft.", error);
+            showToast("The previous draft could not be restored.");
+            return;
+        }
+
+        state.resume = backup;
+        state.activeTab = "questions";
+        renderEditor();
+        refresh();
+        elements.saveStatus.textContent = "Draft restored";
+        elements.saveStatus.style.color = "var(--success)";
+        updateRestoreButton();
+        showToast("Your previous draft has been restored.");
+    });
+
+    updateRestoreButton();
 
     window.ResumeForgeApp = {
         getState: () => state,
