@@ -348,17 +348,22 @@
     document.querySelector("#printButton").addEventListener("click", exportPdf);
 
     document.querySelector("#resetButton").addEventListener("click", () => {
-        const confirmed = window.confirm("Clear this resume and its saved draft from this browser?");
+        const confirmed = window.confirm("Reset this resume? This clears the saved draft in this browser and cannot be undone.");
 
-        if (!confirmed) {
-            return;
-        }
+        if (!confirmed) return;
 
         state.resume = createEmptyResume();
-        persist();
-        state.activeTab = "personal";
+        try {
+            localStorage.removeItem("resumeforge.resume.v1");
+        } catch (error) {
+            console.warn("Could not remove the saved draft.", error);
+        }
+        state.activeTab = "questions";
         renderEditor();
-        showToast("Resume cleared.");
+        refresh();
+        elements.saveStatus.textContent = "Draft reset";
+        elements.saveStatus.style.color = "var(--success)";
+        showToast("Draft reset. Your previous resume has been cleared.");
     });
 
     window.ResumeForgeApp = {
