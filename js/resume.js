@@ -41,6 +41,10 @@
             }
         ],
         skills: "",
+        certifications: [],
+        achievements: [],
+        languages: "",
+        additional: "",
         theme: "modern"
     });
 
@@ -72,7 +76,9 @@
                 },
                 experience: Array.isArray(parsed.experience) ? parsed.experience : empty.experience,
                 education: Array.isArray(parsed.education) ? parsed.education : empty.education,
-                projects: Array.isArray(parsed.projects) ? parsed.projects : empty.projects
+                projects: Array.isArray(parsed.projects) ? parsed.projects : empty.projects,
+                certifications: Array.isArray(parsed.certifications) ? parsed.certifications : [],
+                achievements: Array.isArray(parsed.achievements) ? parsed.achievements : []
             };
         } catch (error) {
             console.warn("Could not load the saved resume.", error);
@@ -169,6 +175,8 @@
         `)
         .join("");
 
+    const renderSimpleEntries = (entries) => (entries || []).filter((entry) => entry.name || entry.title || entry.details).map((entry) => `<div class="resume-item"><div class="resume-item-heading"><span>${escapeHtml(entry.name || entry.title || "")}</span><span class="resume-item-date">${escapeHtml(entry.date || "")}</span></div>${entry.details ? `<p>${escapeHtml(entry.details)}</p>` : ""}</div>`).join("");
+
     const renderPreview = (resume, container) => {
         const personal = resume.personal;
         const contactDetails = [
@@ -179,13 +187,16 @@
             personal.website
         ].filter(Boolean).map(escapeHtml);
 
+        const photo = personal.showPhoto && personal.photo ? `<img class="resume-photo" src="${personal.photo}" alt="Candidate photo">` : "";
         const preview = `
-            <header class="resume-header">
+            <header class="resume-header ${photo ? "has-photo" : ""}">
+                <div class="resume-header-copy">
                 <h1 class="resume-name">${escapeHtml(personal.name || "Your Name")}</h1>
                 <div class="resume-role">${escapeHtml(personal.role || "Target Job Title")}</div>
                 <div class="resume-contact">
                     ${contactDetails.length ? contactDetails.join(" &nbsp; · &nbsp; ") : '<span class="empty-preview">Email · Phone · Location · LinkedIn / Portfolio</span>'}
                 </div>
+                </div>${photo}
             </header>
             ${renderSection("Professional Summary", personal.summary ? `<p>${escapeHtml(personal.summary)}</p>` : "")}
             ${renderSection("Experience", renderExperience(resume.experience))}
@@ -194,6 +205,10 @@
                 ? `<p class="resume-skills">${resume.skills.split(/[,;\n]/).map((skill) => escapeHtml(skill.trim())).filter(Boolean).join(" &nbsp; · &nbsp; ")}</p>`
                 : "")}
             ${renderSection("Projects", renderProjects(resume.projects))}
+            ${renderSection("Certifications", renderSimpleEntries(resume.certifications))}
+            ${renderSection("Achievements & Activities", renderSimpleEntries(resume.achievements))}
+            ${renderSection("Languages", resume.languages ? `<p>${escapeHtml(resume.languages)}</p>` : "")}
+            ${renderSection("Additional Information", resume.additional ? `<p>${escapeHtml(resume.additional)}</p>` : "")}
         `;
 
         container.className = `resume-document theme-${["modern", "classic", "green"].includes(resume.theme) ? resume.theme : "modern"}`;
