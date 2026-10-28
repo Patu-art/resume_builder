@@ -30,10 +30,23 @@
         `;
     };
 
+    const renderQuestionsTab = () => `
+        <div class="section-heading"><h2>Let’s build the right resume</h2><span class="section-count">01 / 07</span></div>
+        <p class="field-hint">Answer what you can. Skip anything that does not apply; you can return to every section later.</p>
+        <div class="form-grid">
+            ${field("What role are you applying for?", "personal.targetRole", "e.g. Frontend Developer / Data Analyst", false, true)}
+            ${field("Paste the job description (optional)", "personal.jobDescription", "Paste the job ad to tailor keywords later.", true, true)}
+            <div class="field field-full"><label for="experienceLevel">Which best describes you?</label><select id="experienceLevel" data-path="personal.experienceLevel"><option value="student" ${state.resume.personal.experienceLevel === "student" ? "selected" : ""}>Student / fresher</option><option value="entry" ${state.resume.personal.experienceLevel === "entry" ? "selected" : ""}>Entry-level candidate</option><option value="experienced" ${state.resume.personal.experienceLevel === "experienced" ? "selected" : ""}>Experienced professional</option><option value="career-change" ${state.resume.personal.experienceLevel === "career-change" ? "selected" : ""}>Career change / returning to work</option></select></div>
+            <div class="field field-full"><label>Do you have formal work experience?</label><div class="choice-row"><label><input type="radio" name="hasExperience" data-bool-path="personal.hasExperience" value="yes" ${state.resume.personal.hasExperience === true ? "checked" : ""}> Yes, include jobs / internships</label><label><input type="radio" name="hasExperience" data-bool-path="personal.hasExperience" value="no" ${state.resume.personal.hasExperience === false ? "checked" : ""}> No, I’m a fresher</label><label><input type="radio" name="hasExperience" data-bool-path="personal.hasExperience" value="skip" ${state.resume.personal.hasExperience === null ? "checked" : ""}> Skip for now</label></div></div>
+            <div class="field field-full"><label for="resumePurpose">What is this resume for?</label><select id="resumePurpose" data-path="personal.resumePurpose"><option value="job" ${state.resume.personal.resumePurpose === "job" ? "selected" : ""}>Job / internship application</option><option value="academic" ${state.resume.personal.resumePurpose === "academic" ? "selected" : ""}>College / scholarship / academic</option><option value="freelance" ${state.resume.personal.resumePurpose === "freelance" ? "selected" : ""}>Freelance / client work</option><option value="general" ${state.resume.personal.resumePurpose === "general" ? "selected" : ""}>General profile</option></select></div>
+        </div>
+        <div class="question-note"><strong>No experience is not a blocker.</strong> We can build a strong fresher resume around education, projects, skills, volunteering, coursework and achievements. Do not invent employment history.</div>
+        <div class="form-actions"><span class="field-hint">Required details are marked when relevant; nothing here needs to be perfect yet.</span><button class="button button-primary" data-next="personal" type="button">Continue to contact details →</button></div>
+    `;
     const renderPersonalTab = () => `
         <div class="section-heading">
             <h2>Personal details</h2>
-            <span class="section-count">01 / 05</span>
+            <span class="section-count">02 / 07</span>
         </div>
         <div class="form-grid">
             ${field("Full name", "personal.name", "e.g. Alex Morgan")}
@@ -43,7 +56,7 @@
             ${field("City / location", "personal.location", "Kalyan, Maharashtra")}
             ${field("LinkedIn URL", "personal.linkedin", "linkedin.com/in/yourname")}
             ${field("Portfolio / GitHub", "personal.website", "github.com/yourname")}
-            ${field("Professional summary", "personal.summary", "Your strengths, relevant experience and target role.", true, true)}
+            ${field("Professional summary", "personal.summary", "Your strengths, relevant experience and target role.", true, true)}\n            <div class="field field-full"><label for="photoUpload">Resume photo (optional)</label><input id="photoUpload" type="file" accept="image/jpeg,image/png,image/webp"><label class="check-inline"><input id="showPhoto" type="checkbox" ${state.resume.personal.showPhoto ? "checked" : ""}> Include photo on the resume</label><p class="field-hint">Photo is optional and often omitted for ATS-focused applications. Use a professional headshot only if appropriate for your country / industry.</p><div id="photoPreviewWrap" class="photo-upload-preview" ${state.resume.personal.photo ? "" : "hidden"}><img id="uploadedPhotoPreview" src="${state.resume.personal.photo || ""}" alt="Uploaded photo preview"><button class="button button-danger button-small" data-remove-photo type="button">Remove photo</button></div></div>
         </div>
         <div class="form-actions">
             <span class="field-hint">Keep your contact details current and use a specific job title.</span>
@@ -131,7 +144,7 @@
         </div>
     `;
 
-    const renderDesignTab = () => {
+    const renderAdditionalTab = () => `\n        <div class="section-heading"><h2>Additional resume sections</h2><span class="section-count">06 / 07</span></div>\n        <p class="field-hint">Add only relevant items. Leave any section blank if you have nothing to include.</p>\n        <h3>Certifications & courses</h3>\n        ${renderEntries("certifications", state.resume.certifications || [], "Certification", [{ label: "Certificate / course name", key: "name", placeholder: "e.g. Intro to Python" }, { label: "Issuer / date", key: "date", placeholder: "Issuer · 2026" }, { label: "Details (optional)", key: "details", placeholder: "Skills covered or credential ID", multiline: true, fullWidth: true }])}\n        <button class="button add-entry" data-add="certifications" type="button">+ Add certification</button>\n        <h3>Achievements, volunteering & leadership</h3>\n        ${renderEntries("achievements", state.resume.achievements || [], "Achievement", [{ label: "Achievement / activity", key: "name", placeholder: "e.g. NSS volunteer" }, { label: "Date", key: "date", placeholder: "2025" }, { label: "What you did / recognition", key: "details", placeholder: "Brief, factual detail", multiline: true, fullWidth: true }])}\n        <button class="button add-entry" data-add="achievements" type="button">+ Add achievement</button>\n        <div class="form-grid additional-fields">${field("Languages", "languages", "English, Hindi, Marathi", true, true)}${field("Other relevant information (optional)", "additional", "Awards, publications, interests relevant to the role…", true, true)}</div>\n        <div class="form-actions"><button class="button button-quiet" data-next="skills" type="button">← Skills & projects</button><button class="button button-primary" data-next="design" type="button">Review resume →</button></div>\n    `;\n\n    const renderDesignTab = () => {
         const themes = [
             { value: "modern", label: "Forest" },
             { value: "classic", label: "Ink" },
@@ -169,11 +182,11 @@
 
     const renderEditor = () => {
         const renderers = {
-            personal: renderPersonalTab,
-            experience: renderExperienceTab,
+            questions: renderQuestionsTab,\n            personal: renderPersonalTab,
+            questions: renderQuestionsTab,\n            experience: renderExperienceTab,
             education: renderEducationTab,
             skills: renderSkillsTab,
-            design: renderDesignTab
+            additional: renderAdditionalTab,\n            design: renderDesignTab
         };
 
         elements.editor.innerHTML = renderers[state.activeTab]();
@@ -218,7 +231,7 @@
 
     const exportPdf = () => window.print();
 
-    elements.editor.addEventListener("input", (event) => {
+    elements.editor.addEventListener("change", async (event) => {\n        if (event.target.id === "photoUpload" && event.target.files && event.target.files[0]) {\n            const file = event.target.files[0];\n            if (!file.type.startsWith("image/")) { showToast("Choose an image file."); return; }\n            if (file.size > 8 * 1024 * 1024) { showToast("Choose an image under 8 MB."); event.target.value = ""; return; }\n            const image = new Image(); const reader = new FileReader();\n            reader.onload = () => { image.onload = () => { const canvas = document.createElement("canvas"); const scale = Math.min(1, 500 / Math.max(image.width, image.height)); canvas.width = Math.round(image.width * scale); canvas.height = Math.round(image.height * scale); canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height); state.resume.personal.photo = canvas.toDataURL("image/jpeg", 0.82); state.resume.personal.showPhoto = true; persist(); renderEditor(); showToast("Photo added. You can remove it anytime."); }; image.src = reader.result; }; reader.readAsDataURL(file);\n        }\n        if (event.target.id === "showPhoto") { state.resume.personal.showPhoto = event.target.checked; persist(); return; }\n        const path = event.target.dataset.path;\n        if (path) { setValue(state.resume, path, event.target.value); persist(); }\n    });\n\n    elements.editor.addEventListener("input", (event) => {
         const path = event.target.dataset.path;
 
         if (!path) {
@@ -230,7 +243,7 @@
     });
 
     elements.editor.addEventListener("click", (event) => {
-        const nextButton = event.target.closest("[data-next]");
+        if (event.target.closest("[data-remove-photo]")) { state.resume.personal.photo = ""; state.resume.personal.showPhoto = false; persist(); renderEditor(); showToast("Photo removed."); return; }\n        const nextButton = event.target.closest("[data-next]");
 
         if (nextButton) {
             state.activeTab = nextButton.dataset.next;
