@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Create a clear, ATS-friendly resume with optional AI writing assistance.">
+    <title>ResumeForge — AI Resume Builder</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/resume.js" defer></script>
+    <script src="js/ai.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="./" aria-label="ResumeForge home">
+            <span class="brand-mark" aria-hidden="true">R</span>
+            <span>ResumeForge <small>AI RESUME BUILDER</small></span>
+        </a>
+        <div class="top-actions">
+            <span class="save-status" id="saveStatus" role="status">Saved on this device</span>
+            <button class="button button-quiet" id="resetButton" type="button">Reset</button>
+            <button class="button button-primary" id="exportButton" type="button">Export PDF</button>
+        </div>
+    </header>
+
+    <main class="workspace">
+        <section class="editor-column" aria-labelledby="pageTitle">
+            <div class="intro">
+                <p class="eyebrow">Career document studio</p>
+                <h1 id="pageTitle">Make your next move count.</h1>
+                <p class="intro-copy">Build a focused resume, improve the wording, and preview every change before you export.</p>
+            </div>
+
+            <section class="ai-panel" aria-labelledby="aiTitle">
+                <div class="ai-panel-heading">
+                    <span class="sparkle" aria-hidden="true">✦</span>
+                    <div>
+                        <h2 id="aiTitle">AI writing assistant</h2>
+                        <p>Use an API key for generative AI, or try the offline writing helpers.</p>
+                    </div>
+                </div>
+                <div class="ai-actions">
+                    <button class="button button-primary" id="improveSummaryButton" type="button">Improve summary</button>
+                    <button class="button button-soft" id="improveExperienceButton" type="button">Polish experience</button>
+                    <button class="button button-soft" id="improveSkillsButton" type="button">Review skills</button>
+                </div>
+                <details class="ai-settings">
+                    <summary>Configure AI provider (optional)</summary>
+                    <div class="field">
+                        <label for="aiProvider">Provider</label>
+                        <select id="aiProvider">
+                            <option value="gemini">Google Gemini</option>
+                            <option value="openai">OpenAI-compatible API</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="aiModel">Model</label>
+                        <input id="aiModel" value="gemini-2.5-flash" autocomplete="off">
+                    </div>
+                    <div class="field">
+                        <label for="aiKey">API key</label>
+                        <input id="aiKey" type="password" placeholder="Paste your API key" autocomplete="off">
+                    </div>
+                    <div class="field" id="endpointField" hidden>
+                        <label for="aiEndpoint">Chat completions endpoint</label>
+                        <input id="aiEndpoint" value="https://api.openai.com/v1/chat/completions" inputmode="url">
+                    </div>
+                    <button class="button button-soft button-small" id="saveAiSettingsButton" type="button">Save AI settings</button>
+                    <p class="privacy-note">The key is stored in this browser and sent to the selected provider only when you request AI writing. Avoid shared devices. For a public production app, use a secured server-side proxy.</p>
+                </details>
+                <p class="ai-status" id="aiStatus" role="status" aria-live="polite"></p>
+            </section>
+
+            <nav class="section-tabs" aria-label="Resume sections">
+                <button class="tab-button is-active" data-tab="personal" type="button">01 Basics</button>
+                <button class="tab-button" data-tab="experience" type="button">02 Experience</button>
+                <button class="tab-button" data-tab="education" type="button">03 Education</button>
+                <button class="tab-button" data-tab="skills" type="button">04 Skills</button>
+                <button class="tab-button" data-tab="design" type="button">05 Style</button>
+            </nav>
+
+            <section class="editor-card" id="editorPanel" aria-live="polite"></section>
+            <footer class="editor-footer">Your draft is stored locally in this browser. Export a copy before clearing browser data.</footer>
+        </section>
+
+        <aside class="preview-column" aria-labelledby="previewTitle">
+            <div class="preview-heading">
+                <div>
+                    <h2 id="previewTitle">Live preview</h2>
+                    <p>ATS-friendly layout · A4 print size</p>
+                </div>
+                <div class="preview-actions">
+                    <button class="button button-quiet" id="sampleButton" type="button">Load sample</button>
+                    <button class="button button-primary" id="printButton" type="button">Print / PDF</button>
+                </div>
+            </div>
+            <div class="preview-stage">
+                <article class="resume-document" id="resumePreview" aria-label="Resume preview"></article>
+            </div>
+        </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
