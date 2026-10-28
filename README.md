@@ -1,6 +1,6 @@
-# ResumeForge — AI Resume Builder
+# Forma — Resume Studio
 
-A responsive, local-first resume builder with live preview, ATS-friendly single-column formatting, browser autosave, print-to-PDF export, and optional AI writing assistance.
+Forma is a local-first resume editor with an editorial visual identity, live preview, ATS-friendly document styling, local autosave, print-to-PDF export and optional AI writing assistance.
 
 ## Run locally
 
@@ -8,10 +8,10 @@ No build tools or package installation are required.
 
 1. Download or clone this repository.
 2. Open `index.html` in a modern browser.
-3. Enter your details. The preview updates as you edit.
-4. Select **Print / PDF** or **Export PDF**, then choose **Save as PDF** in the print dialog.
+3. Enter your details and review the live preview.
+4. Choose **Print / PDF** and select **Save as PDF** in the browser print dialog.
 
-For GitHub Pages, keep `index.html` at the repository root and publish from the repository's configured branch.
+For GitHub Pages, keep `index.html` at the repository root and publish from the configured branch.
 
 ## Project structure
 
@@ -30,28 +30,20 @@ For GitHub Pages, keep `index.html` at the repository root and publish from the 
 └── LICENSE
 ```
 
-- **`index.html`** — semantic page structure and script/style references.
-- **`css/style.css`** — responsive editor, preview, accessibility states and print styles.
-- **`js/resume.js`** — resume data model, local storage, sample data and safe preview rendering.
-- **`js/app.js`** — editor tabs, repeatable sections, live updates and PDF printing.
-- **`js/ai.js`** — optional AI provider requests and offline text helpers.
-- **`assets/favicon.svg`** — small brand icon.
-
 ## Features
 
 - Personal details, summary, experience, education, skills and projects.
-- Add and remove repeatable entries.
-- Live preview with Modern Indigo, Classic Charcoal and Professional Green themes.
+- Repeatable experience, education and project entries.
+- Live resume preview with Forest, Ink and Copper document accents.
 - Browser-local draft autosave.
-- Print dialog export to PDF with A4 print styles.
-- Optional Google Gemini and OpenAI-compatible chat-completions providers.
-- Offline wording helpers when no AI key is configured.
-- Responsive layout and keyboard-visible focus styles.
-- Sample resume for quickly checking the interface.
+- Print-to-PDF with A4 layout.
+- Optional Google Gemini and OpenAI-compatible AI writing assistance.
+- Local text helpers when no AI key is configured.
+- Responsive editor, keyboard focus states and reduced-motion support.
 
-## Optional AI configuration
+## Optional AI setup
 
-Open **Configure AI provider** under the AI writing assistant.
+Open **AI provider settings** in the Writing desk panel.
 
 ### Google Gemini
 - Provider: Google Gemini
@@ -64,21 +56,21 @@ Open **Configure AI provider** under the AI writing assistant.
 - API key: your provider key
 - Endpoint: your provider's chat-completions endpoint
 
-AI requests require internet access and may incur charges depending on your provider/account. The app sends the selected text to the configured provider only when an AI action is requested. Without a key, the app uses simple local text cleanup; this is not generative AI.
+Generative AI requires internet access and a valid key. Usage may be subject to provider limits or charges. Without a key, Forma uses simple local text cleanup; that is not generative AI.
 
-## Privacy and security notes
+## Privacy and security
 
-- Resume data and AI settings are stored in the browser's local storage on the current device.
-- This is a static frontend and does not upload resumes to a project-owned backend.
-- The optional API key is stored in browser local storage. Do not use this on a shared or public computer.
-- For a public production service, do not expose a provider key in client-side code. Add a secured server-side proxy with authentication, rate limiting and usage controls.
-- Review all AI suggestions. Do not include fabricated metrics, qualifications, or work experience.
+- Resume content and AI settings are saved in local storage in the current browser.
+- This static frontend does not upload resumes to a Forma-owned backend.
+- The optional API key is stored in browser local storage. Avoid shared or public computers.
+- For a public production service, use a secured server-side proxy instead of exposing provider keys in the browser.
+- Review all AI suggestions and keep every claim accurate.
 
 ## Limitations
 
-- PDF export uses the browser's print dialog; choose **Save as PDF**.
-- AI generation depends on provider availability, key permissions, CORS policy and model access.
-- This starter does not include login, cloud sync, a server database, or automatic resume parsing.
+- PDF export uses the browser print dialog.
+- AI generation depends on provider availability, key permissions, CORS and model access.
+- No account system, cloud sync, database or automatic resume parsing is included.
 
 ## License
 
