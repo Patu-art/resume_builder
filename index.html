@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Create a clear, ATS-friendly resume with optional AI writing assistance.">
-    <title>ResumeForge — AI Resume Builder</title>
+    <meta name="description" content="A thoughtful, practical workspace for building a clear, ATS-friendly resume.">
+    <title>Forma — Resume Studio</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/resume.js" defer></script>
@@ -13,90 +13,99 @@
 </head>
 <body>
     <header class="topbar">
-        <a class="brand" href="./" aria-label="ResumeForge home">
-            <span class="brand-mark" aria-hidden="true">R</span>
-            <span>ResumeForge <small>AI RESUME BUILDER</small></span>
+        <a class="brand" href="./" aria-label="Forma Resume Studio home">
+            <span class="brand-mark" aria-hidden="true">f.</span>
+            <span class="brand-name">forma<span class="brand-period">.</span><small>RESUME STUDIO</small></span>
         </a>
+        <div class="topbar-center"><span class="live-dot" aria-hidden="true"></span> Your work stays on this device</div>
         <div class="top-actions">
             <span class="save-status" id="saveStatus" role="status">Saved on this device</span>
-            <button class="button button-quiet" id="resetButton" type="button">Reset</button>
-            <button class="button button-primary" id="exportButton" type="button">Export PDF</button>
+            <button class="button button-quiet" id="resetButton" type="button">Clear draft</button>
+            <button class="button button-primary" id="exportButton" type="button">Export PDF <span aria-hidden="true">↗</span></button>
         </div>
     </header>
 
     <main class="workspace">
         <section class="editor-column" aria-labelledby="pageTitle">
             <div class="intro">
-                <p class="eyebrow">Career document studio</p>
-                <h1 id="pageTitle">Make your next move count.</h1>
-                <p class="intro-copy">Build a focused resume, improve the wording, and preview every change before you export.</p>
+                <div class="intro-kicker"><span>01</span><span class="kicker-line"></span><span>THE CAREER WORKSHOP</span></div>
+                <h1 id="pageTitle">A better resume<br><em>starts with clarity.</em></h1>
+                <p class="intro-copy">Thoughtfully shape your experience into a story that makes sense to the people reading it.</p>
             </div>
 
             <section class="ai-panel" aria-labelledby="aiTitle">
                 <div class="ai-panel-heading">
-                    <span class="sparkle" aria-hidden="true">✦</span>
-                    <div>
-                        <h2 id="aiTitle">AI writing assistant</h2>
-                        <p>Use an API key for generative AI, or try the offline writing helpers.</p>
+                    <span class="ai-mark" aria-hidden="true">✳</span>
+                    <div class="ai-copy">
+                        <h2 id="aiTitle">Writing desk <span>OPTIONAL AI</span></h2>
+                        <p>Get a second pass on your words. Your facts stay yours.</p>
                     </div>
                 </div>
                 <div class="ai-actions">
-                    <button class="button button-primary" id="improveSummaryButton" type="button">Improve summary</button>
-                    <button class="button button-soft" id="improveExperienceButton" type="button">Polish experience</button>
-                    <button class="button button-soft" id="improveSkillsButton" type="button">Review skills</button>
+                    <button class="button button-ai" id="improveSummaryButton" type="button">Refine summary <span aria-hidden="true">↗</span></button>
+                    <button class="button button-ai" id="improveExperienceButton" type="button">Polish experience <span aria-hidden="true">↗</span></button>
+                    <button class="button button-ai" id="improveSkillsButton" type="button">Tidy skills <span aria-hidden="true">↗</span></button>
                 </div>
                 <details class="ai-settings">
-                    <summary>Configure AI provider (optional)</summary>
-                    <div class="field">
-                        <label for="aiProvider">Provider</label>
-                        <select id="aiProvider">
-                            <option value="gemini">Google Gemini</option>
-                            <option value="openai">OpenAI-compatible API</option>
-                        </select>
+                    <summary>AI provider settings</summary>
+                    <div class="ai-settings-grid">
+                        <div class="field">
+                            <label for="aiProvider">Provider</label>
+                            <select id="aiProvider">
+                                <option value="gemini">Google Gemini</option>
+                                <option value="openai">OpenAI-compatible API</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="aiModel">Model</label>
+                            <input id="aiModel" value="gemini-2.5-flash" autocomplete="off">
+                        </div>
+                        <div class="field">
+                            <label for="aiKey">API key</label>
+                            <input id="aiKey" type="password" placeholder="Paste your API key" autocomplete="off">
+                        </div>
+                        <div class="field" id="endpointField" hidden>
+                            <label for="aiEndpoint">Chat completions endpoint</label>
+                            <input id="aiEndpoint" value="https://api.openai.com/v1/chat/completions" inputmode="url">
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="aiModel">Model</label>
-                        <input id="aiModel" value="gemini-2.5-flash" autocomplete="off">
-                    </div>
-                    <div class="field">
-                        <label for="aiKey">API key</label>
-                        <input id="aiKey" type="password" placeholder="Paste your API key" autocomplete="off">
-                    </div>
-                    <div class="field" id="endpointField" hidden>
-                        <label for="aiEndpoint">Chat completions endpoint</label>
-                        <input id="aiEndpoint" value="https://api.openai.com/v1/chat/completions" inputmode="url">
-                    </div>
-                    <button class="button button-soft button-small" id="saveAiSettingsButton" type="button">Save AI settings</button>
-                    <p class="privacy-note">The key is stored in this browser and sent to the selected provider only when you request AI writing. Avoid shared devices. For a public production app, use a secured server-side proxy.</p>
+                    <button class="button button-secondary button-small" id="saveAiSettingsButton" type="button">Save settings</button>
+                    <p class="privacy-note">Your key is stored in this browser. For a public production service, use a secured server-side proxy.</p>
                 </details>
                 <p class="ai-status" id="aiStatus" role="status" aria-live="polite"></p>
             </section>
 
-            <nav class="section-tabs" aria-label="Resume sections">
-                <button class="tab-button is-active" data-tab="personal" type="button">01 Basics</button>
-                <button class="tab-button" data-tab="experience" type="button">02 Experience</button>
-                <button class="tab-button" data-tab="education" type="button">03 Education</button>
-                <button class="tab-button" data-tab="skills" type="button">04 Skills</button>
-                <button class="tab-button" data-tab="design" type="button">05 Style</button>
-            </nav>
-
-            <section class="editor-card" id="editorPanel" aria-live="polite"></section>
-            <footer class="editor-footer">Your draft is stored locally in this browser. Export a copy before clearing browser data.</footer>
+            <div class="editor-layout">
+                <nav class="section-tabs" aria-label="Resume sections">
+                    <p class="nav-label">BUILD YOUR RESUME</p>
+                    <button class="tab-button is-active" data-tab="personal" type="button"><span class="tab-number">01</span><span class="tab-label">Your details</span><span class="tab-arrow">↗</span></button>
+                    <button class="tab-button" data-tab="experience" type="button"><span class="tab-number">02</span><span class="tab-label">Experience</span><span class="tab-arrow">↗</span></button>
+                    <button class="tab-button" data-tab="education" type="button"><span class="tab-number">03</span><span class="tab-label">Education</span><span class="tab-arrow">↗</span></button>
+                    <button class="tab-button" data-tab="skills" type="button"><span class="tab-number">04</span><span class="tab-label">Skills & projects</span><span class="tab-arrow">↗</span></button>
+                    <button class="tab-button" data-tab="design" type="button"><span class="tab-number">05</span><span class="tab-label">Document style</span><span class="tab-arrow">↗</span></button>
+                    <div class="nav-note"><span class="nav-note-mark">✳</span><p><strong>Good resumes are specific.</strong><br>Use real examples and results wherever you can.</p></div>
+                </nav>
+                <section class="editor-card" id="editorPanel" aria-live="polite"></section>
+            </div>
+            <footer class="editor-footer"><span>FORMA / 001</span><span>Draft saved locally · No account needed</span></footer>
         </section>
 
         <aside class="preview-column" aria-labelledby="previewTitle">
             <div class="preview-heading">
-                <div>
-                    <h2 id="previewTitle">Live preview</h2>
-                    <p>ATS-friendly layout · A4 print size</p>
+                <div class="preview-title-wrap">
+                    <span class="preview-index">DOCUMENT PREVIEW</span>
+                    <h2 id="previewTitle">Your resume <span>↘</span></h2>
+                    <p>Live layout · A4 paper</p>
                 </div>
                 <div class="preview-actions">
-                    <button class="button button-quiet" id="sampleButton" type="button">Load sample</button>
+                    <button class="button button-quiet" id="sampleButton" type="button">Try sample</button>
                     <button class="button button-primary" id="printButton" type="button">Print / PDF</button>
                 </div>
             </div>
             <div class="preview-stage">
+                <div class="paper-label"><span>PREVIEW</span><span>A4 / 210 × 297 MM</span></div>
                 <article class="resume-document" id="resumePreview" aria-label="Resume preview"></article>
+                <div class="preview-footnote"><span>↳</span> Keep it honest. Keep it clear. Keep it relevant.</div>
             </div>
         </aside>
     </main>
