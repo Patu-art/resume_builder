@@ -89,7 +89,7 @@
         };
     };
 
-    const createPrompt = (kind, input, role) => {
+    const createPrompt = (kind, input, role, jobDescription = "") => {
         const targetRole = role || "the target role";
         const instructions = {
             summary: `Rewrite this resume summary to be concise, professional, ATS-friendly, and 2–4 sentences for ${targetRole}. Preserve the candidate's meaning and use only facts in the input. Do not invent credentials, tools, or achievements. Return only the rewritten summary.`,
@@ -97,7 +97,7 @@
             skills: `Clean up and organize this candidate's existing skills for a resume targeting ${targetRole}. Do not add skills not present in the input. Return only a comma-separated list.`
         };
 
-        return `${instructions[kind]}\n\nCandidate text:\n${input}`;
+        const jobContext = jobDescription.trim() ? `\n\nTarget job description (use only to prioritize relevant facts and keywords; do not claim requirements the candidate has not demonstrated):\n${jobDescription.trim()}` : "";\n        return `${instructions[kind]}${jobContext}\n\nCandidate text:\n${input}`;
     };
 
     const requestGemini = async (prompt, config) => {
@@ -179,7 +179,7 @@
         setStatus("Generating suggestion…");
 
         try {
-            const prompt = createPrompt(kind, input.text, resume.personal.role || resume.personal.targetRole);
+            const prompt = createPrompt(kind, input.text, resume.personal.role || resume.personal.targetRole, resume.personal.jobDescription);
             const output = config.provider === "gemini"
                 ? await requestGemini(prompt, config)
                 : await requestOpenAiCompatible(prompt, config);
