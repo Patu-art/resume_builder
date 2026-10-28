@@ -1,6 +1,6 @@
 # Forma — Resume Studio
 
-Forma is a local-first resume editor with an editorial visual identity, live preview, ATS-friendly document styling, local autosave, print-to-PDF export and optional AI writing assistance.
+Forma is a guided, local-first resume builder. It asks for the target role and application type, supports candidates with or without formal work experience, accepts an optional profile photo, and builds a structured resume with a live A4 preview.
 
 ## Run locally
 
@@ -8,8 +8,9 @@ No build tools or package installation are required.
 
 1. Download or clone this repository.
 2. Open `index.html` in a modern browser.
-3. Enter your details and review the live preview.
-4. Choose **Print / PDF** and select **Save as PDF** in the browser print dialog.
+3. Start with **Start & questions**. Answer what applies; return to any step whenever you need.
+4. Add your contact details, education, skills, projects and any relevant experience or additional sections.
+5. Review the live preview, then choose **Print / PDF** and select **Save as PDF**.
 
 For GitHub Pages, keep `index.html` at the repository root and publish from the configured branch.
 
@@ -32,14 +33,16 @@ For GitHub Pages, keep `index.html` at the repository root and publish from the 
 
 ## Features
 
-- Personal details, summary, experience, education, skills and projects.
-- Repeatable experience, education and project entries.
-- Live resume preview with Forest, Ink and Copper document accents.
-- Browser-local draft autosave.
-- Print-to-PDF with A4 layout.
+- Guided intake: target role, job description, experience level and resume purpose.
+- Explicit work-experience choice; fresher resumes can omit the work-experience section.
+- Optional profile-photo upload with a preview, include/exclude toggle and remove control.
+- Structured sections for summary, work experience, education, skills, projects, certifications, achievements/activities, languages and additional information.
+- Add/remove repeatable entries for experience, education, projects, certifications and achievements.
+- ATS-conscious single-column resume document with Forest, Ink and Copper accents.
+- Live preview, browser-local autosave and A4 print-to-PDF export.
 - Optional Google Gemini and OpenAI-compatible AI writing assistance.
 - Local text helpers when no AI key is configured.
-- Responsive editor, keyboard focus states and reduced-motion support.
+- Responsive layout, keyboard focus states and reduced-motion support.
 
 ## Optional AI setup
 
@@ -60,11 +63,11 @@ Generative AI requires internet access and a valid key. Usage may be subject to 
 
 ## Privacy and security
 
-- Resume content and AI settings are saved in local storage in the current browser.
+- Resume content, the optional photo and AI settings are saved in local storage in the current browser.
 - This static frontend does not upload resumes to a Forma-owned backend.
 - The optional API key is stored in browser local storage. Avoid shared or public computers.
 - For a public production service, use a secured server-side proxy instead of exposing provider keys in the browser.
-- Review all AI suggestions and keep every claim accurate.
+- Review AI suggestions and keep every claim accurate. Never invent employment, qualifications or achievements.
 
 ## Limitations
 
