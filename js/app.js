@@ -247,7 +247,17 @@
         renderEditor();
     };
 
-    const exportPdf = () => window.print();
+    const exportPdf = () => {
+        const b = state.resume.personal;
+        const hasSection = Boolean(state.resume.skills.trim() || state.resume.experience.some(item => item.role || item.company || item.details) || state.resume.education.some(item => item.degree || item.school) || state.resume.projects.some(item => item.name || item.details));
+        if (!b.name.trim() || !hasSection) {
+            state.activeTab = !b.name.trim() ? "personal" : "skills";
+            renderEditor();
+            showToast(!b.name.trim() ? "Add your name before exporting." : "Add at least one relevant section before exporting.");
+            return;
+        }
+        window.print();
+    };
 
     elements.editor.addEventListener("change", async (event) => {
         if (event.target.dataset.boolPath) { const raw = event.target.value; setValue(state.resume, event.target.dataset.boolPath, raw === "yes" ? true : raw === "no" ? false : null); persist(); return; }
